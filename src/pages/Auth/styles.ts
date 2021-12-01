@@ -59,7 +59,7 @@ export const Content = styled.div`
 
     .card {
       background: var(--hilight-color);
-      width: 30rem;
+      width: 28rem;
       height: 24.3125rem;
       border-radius: 8px;
 
@@ -74,7 +74,7 @@ export const Header = styled.header`
 
   display: flex;
   justify-content: flex-start !important;
-  
+
   h2 {
     padding-top: 3.125rem;
     font-size: 1.5rem;
