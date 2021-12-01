@@ -32,7 +32,7 @@ export const Container = styled.div<IbuttonProps>`
       width: 36px;
       height: 36px;
       top: 25%;
-      bottom: 25%;
+      bottom: 30%;
       left: 1.5rem;
       background-color: #f3a83f;
       border-radius: 6px;
