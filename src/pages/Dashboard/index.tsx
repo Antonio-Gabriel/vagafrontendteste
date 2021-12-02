@@ -1,3 +1,7 @@
+import { useAuth } from "../../hooks/useAuth";
+
 export function Dashboard() {
-  return <h1>Dashboard</h1>;
+  const { auth } = useAuth();
+
+  return <h1>Dashboard, {auth.user} eu</h1>;
 }
