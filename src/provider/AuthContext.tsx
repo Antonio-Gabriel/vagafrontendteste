@@ -2,8 +2,13 @@ import { createContext, ReactNode, useState } from "react";
 import { AuthService } from "../services/AuthService";
 import { IAuthentication } from "../types/IAuthentication";
 
+type IUser = {
+  user: string;
+  created_at: Date;
+};
+
 interface IAuthContextState {
-  auth: IAuthentication;
+  auth: IUser;
   signInUser(data: IAuthentication): boolean;
   signOut(): void;
 }
@@ -28,15 +33,20 @@ export function AuthContextProvider({ children }: IAuthContextProviderProps) {
   function signInUser(data: IAuthentication) {
     const response = AuthService(data);
 
-    const auth = JSON.parse(localStorage.getItem("auth") || "{}");
+    const { user, created_at } = JSON.parse(
+      localStorage.getItem("auth") || "{}"
+    );
 
     if (response) {
       setData({
-        auth,
+        auth: {
+          user,
+          created_at,
+        },
       });
 
       return true;
-    }    
+    }
 
     return false;
   }
