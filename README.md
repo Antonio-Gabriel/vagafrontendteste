@@ -13,8 +13,15 @@ Para inicializar o projecto basta inicializar com o comando:
 
 ### `yarn start`
 
+
+## Credenciais para login
+
+username: **Admin**
+password: **admin**
+
+
 ## Feactures
 
-[x] Light e Dark Mode
-[] Tradução
-[] Consumo de Api
+- [x] Light e Dark Mode
+- [ ] Tradução
+- [ ] Consumo de Api
