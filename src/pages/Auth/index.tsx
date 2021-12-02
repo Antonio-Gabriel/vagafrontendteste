@@ -14,8 +14,8 @@ interface IPropsTheme {
 }
 
 export function Auth({ toggleTheme }: IPropsTheme) {
-  const { signInUser } = useAuth();
   let history = useHistory();
+  const { signInUser } = useAuth();
 
   const [data, setData] = useState<IAuthentication>({
     username: "",
@@ -44,7 +44,7 @@ export function Auth({ toggleTheme }: IPropsTheme) {
 
         history.push("/dashboard");
       } else {
-        toast.error("Email or password invalid!");
+        toast.error("Usuário or password invalid!");
 
         setData({
           username: "",
