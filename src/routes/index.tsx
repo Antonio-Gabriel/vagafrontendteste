@@ -2,7 +2,7 @@ import { Switch } from "react-router-dom";
 import { Router } from "./Route";
 
 import { Auth } from "../pages/Auth";
-import { Dashboard } from "../pages/Dashboard";
+import { Dashboard as DashComponent } from "../pages/Dashboard";
 
 type IRouteProps = {
   toggleTheme: () => void;
@@ -11,6 +11,10 @@ type IRouteProps = {
 export function Routes({ toggleTheme }: IRouteProps) {
   function Login() {
     return <Auth toggleTheme={toggleTheme} />;
+  }
+
+  function Dashboard() {
+    return <DashComponent toggleTheme={toggleTheme} />;
   }
 
   return (

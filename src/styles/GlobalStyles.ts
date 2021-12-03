@@ -28,4 +28,13 @@ export const GlobalStyles = createGlobalStyle`
     list-style: none;
     text-decoration: none;
   }
+
+  @-webkit-keyframes glow {
+    from {
+      background: var(--success-color);
+    }
+    to {
+      background: green;
+    }
+  }
 `;

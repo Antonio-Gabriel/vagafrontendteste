@@ -4,6 +4,7 @@ import { darken } from "polished";
 interface IbuttonProps {
   width: number;
   height: number;
+  unity?: string; 
 }
 
 export const Container = styled.div<IbuttonProps>`
@@ -11,8 +12,8 @@ export const Container = styled.div<IbuttonProps>`
   width: 100%;
 
   button {
-    width: ${({ width }) => width + "%"};
-    height: ${({ height }) => height + "rem"};
+    width: ${({ width, unity = "%" }) => (width + unity)};
+    height: ${({ height, unity = "rem" }) => height + unity};
 
     border: none;
     outline: none;
