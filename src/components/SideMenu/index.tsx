@@ -1,14 +1,15 @@
 import { ISideSubMenu } from "../../types/ISideMenu";
 import { DropDownCollapse, NavigationDropDown } from "./styles";
 
-import { SideMenuItem } from "../SideMenuItem";
+import { DropDownItem } from "../SideMenuItem/styles";
 
 type ISideMenuProps = {
   isOpen: boolean;
   toggleMenu: () => void;
   id: number;
   name: string;
-  submenus: ISideSubMenu[];
+  subMenus: ISideSubMenu[];
+  handleClick: () => Promise<void>;
 };
 
 export function SideMenu({
@@ -16,7 +17,8 @@ export function SideMenu({
   toggleMenu,
   id,
   name,
-  submenus,
+  subMenus,
+  handleClick,
 }: ISideMenuProps) {
   return (
     <>
@@ -37,7 +39,11 @@ export function SideMenu({
               <span>{name}</span>
             </header>
             <DropDownCollapse>
-              <SideMenuItem submenu={submenus} />
+              {subMenus.map((item) => (
+                <li key={item.id} onClick={handleClick}>
+                  <DropDownItem to="/">{item.name}</DropDownItem>
+                </li>
+              ))}
             </DropDownCollapse>
           </li>
         </ul>

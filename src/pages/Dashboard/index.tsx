@@ -3,6 +3,14 @@ import { useAuth } from "../../hooks/useAuth";
 import { Button } from "../../components/Button";
 import { SideMenu } from "../../components/SideMenu";
 
+import { subMenuItems } from "./data";
+import { Input } from "../../components/Input";
+import { Card } from "../../components/Card";
+import { Owner } from "../../components/Owner";
+import { SmallButton } from "../../components/ButtonSmall";
+import { getMenus } from "../../services/MenuService";
+import { IMenu } from "../../types/ISideMenu";
+
 import {
   Container,
   AsideHeader,
@@ -13,12 +21,10 @@ import {
   BtnGroups,
   Cards,
 } from "./styles";
-import { ChangeEvent, useEffect, useState } from "react";
 
-import { SideMenu as SideMenuData, subMenuItems } from "./data";
-import { Input } from "../../components/Input";
-import { Card } from "../../components/Card";
-import { ICardProps } from "../../types/ICardProps";
+import { ChangeEvent, useEffect, useState } from "react";
+import { ItemService } from "../../services/ItemService";
+import { ICardProps, IRequestCardProps } from "../../types/ICardProps";
 
 interface IPropsTheme {
   toggleTheme: () => void;
@@ -29,6 +35,26 @@ export function Dashboard({ toggleTheme }: IPropsTheme) {
   const [toggle, setToggle] = useState(-1);
   const [search, setSearch] = useState("");
 
+  const [menu, setMenu] = useState<IMenu[]>([]);
+  const [item, setItem] = useState<IRequestCardProps>({} as any);
+  const [item_id, setItem_id] = useState(0);
+
+  useEffect(() => {
+    showMenus();
+  }, []);
+
+  // useEffect(() => {
+  //   showCardByItem(item_id);
+  // }, [item_id]);
+
+  async function showMenus() {
+    await getMenus().then((response) => setMenu(response.data));
+  }
+
+  async function showCardByItem(item: number) {
+    await ItemService(item).then((response) => setItem(response));
+  }
+
   // CkeckBox Action
   const [isCheckAll, setIsCheckAll] = useState(false);
   const [isCheck, setIsCheck] = useState([] as any);
@@ -38,7 +64,7 @@ export function Dashboard({ toggleTheme }: IPropsTheme) {
     setList(subMenuItems);
   }, [list]);
 
-  function handleSelectAll(event: ChangeEvent<HTMLInputElement>) {
+  function handleSelectAll() {
     setIsCheckAll(!isCheckAll);
     setIsCheck(list.map((item) => String(item?.id)));
 
@@ -54,9 +80,6 @@ export function Dashboard({ toggleTheme }: IPropsTheme) {
     if (!checked) {
       setIsCheck(isCheck.filter((item: string) => item !== id));
     }
-
-    // setIsCheckAll(isCheckAll);
-    // setIsCheck(list.map((item) => String(item?.id)));
   };
 
   function toggleSideMenu(index: number) {
@@ -67,11 +90,9 @@ export function Dashboard({ toggleTheme }: IPropsTheme) {
     <Container>
       <aside>
         <AsideHeader>
-          <div className="acronym">
-            <span>{acronym(auth.user)}</span>
-          </div>
+          <Owner username={acronym(auth.user)} />
           <div className="new">
-            <Button width={9.375} height={3.4375} text="NEW" unity="rem" />
+            <Button width={9.375} height={3.4375} text="NOVO" unity="rem" />
           </div>
         </AsideHeader>
 
@@ -89,14 +110,18 @@ export function Dashboard({ toggleTheme }: IPropsTheme) {
           </article>
         </Favorites>
 
-        {SideMenuData.map((item, index) => (
+        {menu.map((item, index) => (
           <SideMenu
             isOpen={index === toggle}
             toggleMenu={() => toggleSideMenu(index)}
             id={item.id}
             name={item.name}
-            submenus={item.subMenus}
+            subMenus={item.subMenus}
             key={item.id}
+            // Terminando o carregamento dos Owners na pagina
+            handleClick={() =>
+              showCardByItem(Number(item.subMenus.map((data) => data.id)))
+            }
           />
         ))}
       </aside>
@@ -137,27 +162,40 @@ export function Dashboard({ toggleTheme }: IPropsTheme) {
               checked={isCheckAll}
             />
             <BtnGroups>
-              <button>Atribuir</button>
-              <button>Arquivar</button>
-              <button>Agendar</button>
+              <SmallButton
+                text="Atribuir"
+                handleClick={() => console.log("nn")}
+              />
+              <SmallButton
+                text="Arquivar"
+                handleClick={() => console.log("nn")}
+              />
+              <SmallButton
+                text="Agendar"
+                handleClick={() => console.log("nn")}
+              />
             </BtnGroups>
           </div>
           <i className="icon-filter"></i>
         </SectionGroup>
 
         <Cards>
-          {subMenuItems.map((item) => (
-            <Card
-              key={item.id}
-              id={Number(item.id)}
-              name={item.name}
-              subject={item.subject}
-              owner={item.owner}
-              users={item.users}
-              handleClick={handleClick}
-              isChecked={isCheck.includes(String(item.id))}
-            />
-          ))}
+          {item.subMenuItems !== undefined ? (
+            item.subMenuItems.map((data) => (
+              <Card
+                key={data.id}
+                id={Number(data.id)}
+                name={data.name}
+                subject={data.subject}
+                owner={data.owner}
+                users={data.users}
+                handleClick={handleClick}
+                isChecked={isCheck.includes(String(data.id))}
+              />
+            ))
+          ) : (
+            <h2>Sem registro</h2>
+          )}
         </Cards>
       </section>
     </Container>

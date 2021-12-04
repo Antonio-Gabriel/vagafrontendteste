@@ -54,6 +54,8 @@ export const GlobalStyles = createGlobalStyle`
 
       display: grid;
       place-content: center;
+
+      cursor: pointer;
     }
 
     input[type="checkbox"]::before {

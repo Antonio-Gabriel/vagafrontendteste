@@ -9,3 +9,8 @@ export type ICardProps = {
   handleClick?: (e: ChangeEvent<HTMLInputElement>) => void;
   isChecked?: boolean;
 };
+
+export type IRequestCardProps = {
+  id: number;
+  subMenuItems: Omit<ICardProps[], "handleClick" | "isChecked">;
+}
