@@ -1,28 +1,41 @@
 import styled from "styled-components";
+import { Grid } from "../../styles/Grid";
 
 export const Container = styled.div`
-  display: grid;
-  grid-template-columns: 22rem 1fr;
+  display: flex;
   height: 100vh;
 
   aside {
     padding: 0 1.625rem;
     background: var(--hilight-color);
+    width: 22rem;
+    position: fixed;
+    height: 100vh;
   }
 
   section {
+    margin-left: 22rem;
+    width: 100%;
     padding: 2.25rem 2.625rem;
 
     header {
       display: flex;
       justify-content: space-between;
-      align-items: center;      
+      align-items: center;
     }
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+
+    background: #5a5a66;
+
+    margin-top: 18px;
   }
 `;
 
 export const BtnsEvents = styled.div`
-
   display: flex;
 
   > div {
@@ -44,6 +57,56 @@ export const BtnsEvents = styled.div`
 
     + div {
       margin-left: 0.5rem;
+    }
+  }
+`;
+
+export const SearchBar = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  background: var(--hilight-color);
+  padding: 0.4rem 1.375rem;
+  margin-top: 1.375rem;
+  border-radius: 8px;
+
+  .eJYuYY {
+    border-color: transparent !important;
+    background: transparent;
+    :focus {
+      border-color: transparent !important;
+    }
+  }
+
+  .sc-jRQBWg.ffzmrl {
+    background: transparent;
+    border: transparent;
+
+    :focus {
+      background: transparent;
+    }
+  }
+
+  i {
+    font-size: 1.5rem;
+  }
+
+  button {
+    width: 84px;
+    height: 46px;
+    border: none;
+    border-radius: 6px;
+
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--text-color);
+    background: var(--primary-color);
+
+    transition: 0.2s;
+
+    :hover {
+      filter: brightness(0.9);
     }
   }
 `;
@@ -122,5 +185,56 @@ export const Favorites = styled.div`
     svg {
       fill: var(--text-color);
     }
+  }
+`;
+
+export const SectionGroup = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 1.125rem 0 2rem 0;
+
+  i {
+    font-size: 2.2rem;
+  }
+
+  .left {
+    display: flex;
+    align-items: center;
+  }
+`;
+
+export const BtnGroups = styled.div`
+  margin-left: 1.375rem;
+
+  button {
+    width: 84px;
+    height: 46px;
+    border: none;
+    border-radius: 6px;
+
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--text-color);
+    background: var(--hilight-color);
+
+    transition: 0.2s;
+
+    + button {
+      margin-left: 0.5rem;
+    }
+
+    :hover {
+      background: var(--primary-color);
+    }
+  }
+`;
+
+export const Cards = styled.div`
+  padding: 0 0 1rem 0;
+
+  ${Grid} {
+    gap: 0.2rem;
   }
 `;

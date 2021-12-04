@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const DropDownItem = styled(Link)`
-  font-size: 1.115rem;
+  font-size: 1.015rem;
   font-weight: 500;
 
   color: var(--text-color);

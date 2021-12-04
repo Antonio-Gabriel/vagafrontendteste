@@ -37,20 +37,7 @@ export const DropDownCollapse = styled.ul`
   li {
     display: grid;
     row-gap: 0.2rem;
-    padding: 0.75rem 2.5rem 0.75rem 1.8rem;
+    padding: 0.75rem 2.5rem 0.75rem 1.8rem;    
   }
 `;
 
-// export const DropDownItem = styled(Link)`
-//   font-size: 1.115rem;
-//   font-weight: 500;
-
-//   color: var(--text-color);
-//   filter: brightness(0.8);
-
-//   transition: filter 0.2s;
-
-//   :hover {
-//     filter: brightness(1);
-//   }
-// `;

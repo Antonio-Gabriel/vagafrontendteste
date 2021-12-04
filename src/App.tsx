@@ -16,7 +16,7 @@ import "./assets/icons/style.css";
 import "react-toastify/dist/ReactToastify.css";
 
 export function App() {
-  const [theme, setTheme] = useDarkMode<DefaultTheme>("theme", light);
+  const [theme, setTheme] = useDarkMode<DefaultTheme>("theme", dark);
 
   function toggleTheme() {
     setTheme(theme.title === "light" ? dark : light);

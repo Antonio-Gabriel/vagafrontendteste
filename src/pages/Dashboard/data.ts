@@ -1,3 +1,5 @@
+import { ICardProps } from "../../types/ICardProps";
+
 export const SideMenu = [
   {
     id: 1,
@@ -40,5 +42,50 @@ export const SideMenu = [
         name: "Lixo",
       },
     ],
+  },
+];
+
+export const subMenuItems: ICardProps[] = [
+  {
+    id: 1,
+    name: "Joao Cabral",
+    subject: "Recebeu minha mensagem?",
+    owner: "JC",
+    users: ["JC", "MN", "CC"],
+  },
+  {
+    id: 2,
+    name: "Maria Nadir",
+    subject: "Bom dia",
+    owner: "MN",
+    users: ["MN"],
+  },
+  {
+    id: 3,
+    name: "Fernando Henrique",
+    subject: "Aguardo retorno",
+    owner: "FH",
+    users: ["FH", "CV", "MC", "BB"],
+  },
+  {
+    id: 4,
+    name: "Carlos Vaz",
+    subject: "Lembrete",
+    owner: "CV",
+    users: ["CV", "FH"],
+  },
+  {
+    id: 5,
+    name: "Bruno Baxtos",
+    subject: "Aviso",
+    owner: "BB",
+    users: ["BB"],
+  },
+  {
+    id: 6,
+    name: "Mauro Marins",
+    subject: "Resposta daquela chamada do final de semana",
+    owner: "MM",
+    users: ["MM", "BB"],
   },
 ];
