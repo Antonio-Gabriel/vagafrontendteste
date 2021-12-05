@@ -23,36 +23,27 @@ import {
 } from "./styles";
 
 import { ChangeEvent, useEffect, useState } from "react";
-import { ItemService } from "../../services/ItemService";
-import { ICardProps, IRequestCardProps } from "../../types/ICardProps";
+
+import { ICardProps } from "../../types/ICardProps";
+import { toast } from "react-toastify";
 
 interface IPropsTheme {
   toggleTheme: () => void;
 }
 
 export function Dashboard({ toggleTheme }: IPropsTheme) {
-  const { auth } = useAuth();
+  const { auth, item, signOut } = useAuth();
   const [toggle, setToggle] = useState(-1);
   const [search, setSearch] = useState("");
 
   const [menu, setMenu] = useState<IMenu[]>([]);
-  const [item, setItem] = useState<IRequestCardProps>({} as any);
-  const [item_id, setItem_id] = useState(0);
 
   useEffect(() => {
     showMenus();
-  }, []);
-
-  // useEffect(() => {
-  //   showCardByItem(item_id);
-  // }, [item_id]);
+  }, [menu]);
 
   async function showMenus() {
     await getMenus().then((response) => setMenu(response.data));
-  }
-
-  async function showCardByItem(item: number) {
-    await ItemService(item).then((response) => setItem(response));
   }
 
   // CkeckBox Action
@@ -84,6 +75,16 @@ export function Dashboard({ toggleTheme }: IPropsTheme) {
 
   function toggleSideMenu(index: number) {
     setToggle((currentValue) => (currentValue !== index ? index : -1));
+  }
+
+  function archiveItem() {
+    if (isCheckAll && item.subMenuItems.length > 0) {
+      item.subMenuItems = [];
+
+      setIsCheckAll(!isCheckAll);
+    } else {
+      toast.warning("Carregue o item e selecione todos para poder arquivar");
+    }
   }
 
   return (
@@ -118,10 +119,6 @@ export function Dashboard({ toggleTheme }: IPropsTheme) {
             name={item.name}
             subMenus={item.subMenus}
             key={item.id}
-            // Terminando o carregamento dos Owners na pagina
-            handleClick={() =>
-              showCardByItem(Number(item.subMenus.map((data) => data.id)))
-            }
           />
         ))}
       </aside>
@@ -134,6 +131,9 @@ export function Dashboard({ toggleTheme }: IPropsTheme) {
             </div>
             <div className="theme" onClick={toggleTheme}>
               <i className="icon-dark"></i>
+            </div>
+            <div className="logout" onClick={signOut}>
+              <i className="icon-delete"></i>
             </div>
           </BtnsEvents>
         </header>
@@ -166,10 +166,7 @@ export function Dashboard({ toggleTheme }: IPropsTheme) {
                 text="Atribuir"
                 handleClick={() => console.log("nn")}
               />
-              <SmallButton
-                text="Arquivar"
-                handleClick={() => console.log("nn")}
-              />
+              <SmallButton text="Arquivar" handleClick={archiveItem} />
               <SmallButton
                 text="Agendar"
                 handleClick={() => console.log("nn")}
@@ -180,7 +177,7 @@ export function Dashboard({ toggleTheme }: IPropsTheme) {
         </SectionGroup>
 
         <Cards>
-          {item.subMenuItems !== undefined ? (
+          {item.subMenuItems !== undefined && item.subMenuItems.length > 0 ? (
             item.subMenuItems.map((data) => (
               <Card
                 key={data.id}

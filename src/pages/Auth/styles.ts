@@ -20,8 +20,9 @@ export const Container = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      
+
       cursor: pointer;
+      transition: 0.2s;
 
       i {
         font-size: 1rem;
@@ -30,6 +31,10 @@ export const Container = styled.div`
 
       + div {
         margin-left: 0.5rem;
+      }
+
+      :hover {
+        filter: brightness(0.8);
       }
     }
   }

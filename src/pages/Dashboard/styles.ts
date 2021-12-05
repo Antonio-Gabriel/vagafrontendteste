@@ -50,6 +50,8 @@ export const BtnsEvents = styled.div`
 
     cursor: pointer;
 
+    transition: 0.2s;
+
     i {
       font-size: 1rem;
       color: var(--text-color);
@@ -57,6 +59,10 @@ export const BtnsEvents = styled.div`
 
     + div {
       margin-left: 0.5rem;
+    }
+
+    :hover {
+      filter: brightness(0.8);
     }
   }
 `;
@@ -121,6 +127,7 @@ export const AsideHeader = styled.header`
 
   .new {
     button {
+      font-size: 0.8rem;
       transform: translate(0%, -14%);
     }
 

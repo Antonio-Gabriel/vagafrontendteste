@@ -24,4 +24,4 @@ password: **admin**
 
 - [x] Light e Dark Mode
 - [ ] Tradução
-- [ ] Consumo de Api
+- [x] Consumo de Api

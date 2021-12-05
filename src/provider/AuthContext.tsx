@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useState } from "react";
 import { AuthService } from "../services/AuthService";
 import { IAuthentication } from "../types/IAuthentication";
+import { IRequestCardProps } from "../types/ICardProps";
 
 type IUser = {
   user: string;
@@ -9,6 +10,8 @@ type IUser = {
 
 interface IAuthContextState {
   auth: IUser;
+  item: IRequestCardProps;
+  setItem: (item: IRequestCardProps) => void;
   signInUser(data: IAuthentication): boolean;
   signOut(): void;
 }
@@ -29,6 +32,8 @@ export function AuthContextProvider({ children }: IAuthContextProviderProps) {
 
     return {};
   });
+
+  const [item, setItem] = useState<IRequestCardProps>({} as IRequestCardProps);  
 
   function signInUser(data: IAuthentication) {
     const response = AuthService(data);
@@ -59,7 +64,9 @@ export function AuthContextProvider({ children }: IAuthContextProviderProps) {
   }
 
   return (
-    <AuthContext.Provider value={{ signInUser, auth: data.auth, signOut }}>
+    <AuthContext.Provider
+      value={{ signInUser, auth: data.auth, signOut, item, setItem }}
+    >
       {children}
     </AuthContext.Provider>
   );

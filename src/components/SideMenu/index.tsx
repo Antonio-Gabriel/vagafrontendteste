@@ -2,6 +2,8 @@ import { ISideSubMenu } from "../../types/ISideMenu";
 import { DropDownCollapse, NavigationDropDown } from "./styles";
 
 import { DropDownItem } from "../SideMenuItem/styles";
+import { useAuth } from "../../hooks/useAuth";
+import { ItemService } from "../../services/ItemService";
 
 type ISideMenuProps = {
   isOpen: boolean;
@@ -9,7 +11,6 @@ type ISideMenuProps = {
   id: number;
   name: string;
   subMenus: ISideSubMenu[];
-  handleClick: () => Promise<void>;
 };
 
 export function SideMenu({
@@ -18,8 +19,14 @@ export function SideMenu({
   id,
   name,
   subMenus,
-  handleClick,
 }: ISideMenuProps) {
+  const { setItem } = useAuth();
+
+  async function handleSelectId(id: number) {
+    const itemResponse = await ItemService(id).then((response) => response);
+    setItem(itemResponse);
+  }
+
   return (
     <>
       <NavigationDropDown isOpen={isOpen} onClick={toggleMenu} key={id}>
@@ -40,7 +47,13 @@ export function SideMenu({
             </header>
             <DropDownCollapse>
               {subMenus.map((item) => (
-                <li key={item.id} onClick={handleClick}>
+                <li
+                  key={item.id}
+                  onClick={(e: React.MouseEvent) => {
+                    e.preventDefault();
+                    handleSelectId(item.id);
+                  }}
+                >
                   <DropDownItem to="/">{item.name}</DropDownItem>
                 </li>
               ))}

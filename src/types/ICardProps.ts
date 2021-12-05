@@ -10,7 +10,7 @@ export type ICardProps = {
   isChecked?: boolean;
 };
 
-export type IRequestCardProps = {
+export type IRequestCardProps = {  
   id: number;
   subMenuItems: Omit<ICardProps[], "handleClick" | "isChecked">;
 }
