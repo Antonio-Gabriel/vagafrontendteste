@@ -54,7 +54,7 @@ export const Content = styled.div`
     h1 {
       font-size: 3rem;
       font-weight: 700;
-      max-width: 27.5rem;
+      max-width: 31.25rem;
 
       margin-bottom: 2rem;
     }

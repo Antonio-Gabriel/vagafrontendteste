@@ -8,12 +8,22 @@ import { Input } from "../../components/Input/index";
 
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface IPropsTheme {
   toggleTheme: () => void;
 }
 
 export function Auth({ toggleTheme }: IPropsTheme) {
+  const [translation, setTranslation] = useState(false);
+  const { t, i18n } = useTranslation();
+
+  function changeLanguage() {
+    i18n.changeLanguage(translation ? "pt" : "en");
+
+    setTranslation(!translation);
+  }
+
   let history = useHistory();
   const { signInUser } = useAuth();
 
@@ -35,7 +45,7 @@ export function Auth({ toggleTheme }: IPropsTheme) {
     try {
       const isAuth = signInUser(data);
       if (isAuth) {
-        toast.success("Authorized");
+        toast.success(t("translation.Autorizado"));
 
         setData({
           username: "",
@@ -44,7 +54,7 @@ export function Auth({ toggleTheme }: IPropsTheme) {
 
         history.push("/dashboard");
       } else {
-        toast.error("Usuário or password invalid!");
+        toast.error(t("translation.Username or password invalid!"));
 
         setData({
           username: "",
@@ -59,7 +69,7 @@ export function Auth({ toggleTheme }: IPropsTheme) {
   return (
     <Container>
       <header>
-        <div className="translate">
+        <div className="translate" onClick={changeLanguage}>
           <i className="icon-g_translate"></i>
         </div>
         <div className="theme" onClick={toggleTheme}>
@@ -68,8 +78,8 @@ export function Auth({ toggleTheme }: IPropsTheme) {
       </header>
       <Content>
         <div className="text">
-          <h1>Faça o Login para continuar a navegar na plataforma</h1>
-          <p>É bom ter você de volta.</p>
+          <h1>{t("translation.Login to continue browsing the platform")}</h1>
+          <p>{t("translation.It's good to have you back")}</p>
         </div>
         <div className="auth">
           <div className="card">

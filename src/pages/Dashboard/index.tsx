@@ -11,6 +11,12 @@ import { SmallButton } from "../../components/ButtonSmall";
 import { getMenus } from "../../services/MenuService";
 import { IMenu } from "../../types/ISideMenu";
 
+import { ChangeEvent, useEffect, useState } from "react";
+
+import { ICardProps } from "../../types/ICardProps";
+import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
+
 import {
   Container,
   AsideHeader,
@@ -21,11 +27,6 @@ import {
   BtnGroups,
   Cards,
 } from "./styles";
-
-import { ChangeEvent, useEffect, useState } from "react";
-
-import { ICardProps } from "../../types/ICardProps";
-import { toast } from "react-toastify";
 
 interface IPropsTheme {
   toggleTheme: () => void;
@@ -83,8 +84,19 @@ export function Dashboard({ toggleTheme }: IPropsTheme) {
 
       setIsCheckAll(!isCheckAll);
     } else {
-      toast.warning("Carregue o item e selecione todos para poder arquivar");
+      toast.warning(
+        t("translation.Load the item and select all to be able to archive")
+      );
     }
+  }
+
+  const [translation, setTranslation] = useState(false);
+  const { t, i18n } = useTranslation();
+
+  function changeLanguage() {
+    i18n.changeLanguage(translation ? "pt" : "en");
+
+    setTranslation(!translation);
   }
 
   return (
@@ -93,13 +105,18 @@ export function Dashboard({ toggleTheme }: IPropsTheme) {
         <AsideHeader>
           <Owner username={acronym(auth.user)} />
           <div className="new">
-            <Button width={9.375} height={3.4375} text="NOVO" unity="rem" />
+            <Button
+              width={9.375}
+              height={3.4375}
+              text={t("translation.NEW")}
+              unity="rem"
+            />
           </div>
         </AsideHeader>
 
         <Favorites>
           <article>
-            <span>Favorites</span>
+            <span>{t("translation.Favorites")}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -126,7 +143,7 @@ export function Dashboard({ toggleTheme }: IPropsTheme) {
         <header>
           <h1>WIID-FrontEnd</h1>
           <BtnsEvents>
-            <div className="translate">
+            <div className="translate" onClick={changeLanguage}>
               <i className="icon-g_translate"></i>
             </div>
             <div className="theme" onClick={toggleTheme}>
@@ -143,12 +160,12 @@ export function Dashboard({ toggleTheme }: IPropsTheme) {
             name="username"
             value={search}
             onChange={() => setSearch(search)}
-            placeholder="Caixa de entrada"
+            placeholder={t("translation.inbox")}
             type="text"
             autoComplete="off"
             required
           />
-          <button>Pesquisar</button>
+          <button>{t("translation.Search")}</button>
         </SearchBar>
         <div className="divider" />
 
@@ -163,12 +180,15 @@ export function Dashboard({ toggleTheme }: IPropsTheme) {
             />
             <BtnGroups>
               <SmallButton
-                text="Atribuir"
+                text={t("translation.To assign")}
                 handleClick={() => console.log("nn")}
               />
-              <SmallButton text="Arquivar" handleClick={archiveItem} />
               <SmallButton
-                text="Agendar"
+                text={t("translation.To file")}
+                handleClick={archiveItem}
+              />
+              <SmallButton
+                text={t("translation.To schedule")}
                 handleClick={() => console.log("nn")}
               />
             </BtnGroups>
@@ -191,7 +211,7 @@ export function Dashboard({ toggleTheme }: IPropsTheme) {
               />
             ))
           ) : (
-            <h2>Sem registro</h2>
+            <h2>{t("translation.No registry")}</h2>
           )}
         </Cards>
       </section>
